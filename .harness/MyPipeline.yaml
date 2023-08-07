@@ -37,7 +37,7 @@ pipeline:
                       roleArn: ""
                       parameterOverrides:
                         - name: NewS3
-                          value: harrrr1
+                          value: <+pipeline.variables.S3Bucket>
                           type: String
                   timeout: 10m
         tags: {}
