@@ -5,3 +5,7 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: "bucketbucket2233"
+  NewBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: "bucketbucket223344"
