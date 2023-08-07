@@ -1,0 +1,39 @@
+pipeline:
+  name: NewPipeline1
+  identifier: NewPipeline1
+  projectIdentifier: AWS
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: CustomStage1
+        identifier: CustomStage1
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: CreateStack
+                  name: CreateStack
+                  identifier: CreateStack
+                  spec:
+                    provisionerIdentifier: ABC
+                    configuration:
+                      stackName: NewStack1
+                      connectorRef: AWS
+                      region: ap-southeast-2
+                      templateFile:
+                        type: Remote
+                        spec:
+                          store:
+                            type: Github
+                            spec:
+                              paths:
+                                - lab1.1.1.yaml
+                              connectorRef: GitHub
+                              gitFetchType: Branch
+                              branch: main
+                      roleArn: ""
+                  timeout: 10m
+        tags: {}
