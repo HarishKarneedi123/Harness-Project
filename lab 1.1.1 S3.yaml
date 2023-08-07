@@ -4,7 +4,7 @@ Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: "hari-s3-bucket"
+      BucketName: "bucket4545"
   NewBucket:
     Type: AWS::S3::Bucket
     Properties:
