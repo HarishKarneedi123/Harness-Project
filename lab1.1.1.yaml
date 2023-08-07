@@ -8,7 +8,4 @@ Parameters:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref NewS3
-  NewBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Ref NewS3
+  
