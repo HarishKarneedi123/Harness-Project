@@ -1,0 +1,40 @@
+pipeline:
+  name: FitrstPipeline1
+  identifier: FitrstPipeline1
+  projectIdentifier: AWS
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: Cstage1
+        identifier: Cstage1
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: CreateStack
+                  name: CreateStack
+                  identifier: CreateStack
+                  spec:
+                    provisionerIdentifier: ABC
+                    configuration:
+                      stackName: Newstack2
+                      connectorRef: AWS
+                      region: ap-southeast-2
+                      templateFile:
+                        type: Remote
+                        spec:
+                          store:
+                            type: Github
+                            spec:
+                              paths:
+                                - lab1.1.1.yaml
+                              connectorRef: account.Github_OAuth_1686834553347
+                              repoName: Harness-Project
+                              gitFetchType: Branch
+                              branch: main
+                      roleArn: ""
+                  timeout: 10m
+        tags: {}
