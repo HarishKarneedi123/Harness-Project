@@ -3,9 +3,10 @@ Description: "Template for S3 Bucket"
 Parameters:
   NewS3:
     Type: String
-  Resources:
+Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref NewS3
+  
   
