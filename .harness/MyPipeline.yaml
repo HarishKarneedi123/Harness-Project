@@ -35,5 +35,9 @@ pipeline:
                               gitFetchType: Branch
                               branch: main
                       roleArn: ""
+                      parameterOverrides:
+                        - name: NewS3
+                          value: harrrr1
+                          type: String
                   timeout: 10m
         tags: {}
