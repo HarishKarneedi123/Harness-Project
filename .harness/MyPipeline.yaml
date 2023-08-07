@@ -37,13 +37,13 @@ pipeline:
                       roleArn: ""
                       parameterOverrides:
                         - name: NewS3
-                          value: <+pipeline.variables.S3Bucket>
+                          value: <+pipeline.variables.s3buckkkk>
                           type: String
                   timeout: 10m
         tags: {}
   variables:
-    - name: S3Bucket
+    - name: s3buckkkk
       type: String
       description: ""
       required: false
-      value: <+input>
+      value: min5
