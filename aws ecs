@@ -1,0 +1,58 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "AWS ECS Cluster"
+Parameters:
+  VpcId:
+    Type: String
+    Default: 'vpc-0eaad78df502ed062'
+Resources:
+  ECSCluster:
+    Type: 'AWS::ECS::Cluster'
+    Properties:
+      ClusterName: MyFargateCluster
+      CapacityProviders:
+        - FARGATE
+  ECSTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      ContainerDefinitions:
+        - Name: MyNginx3
+          Image: 'nginx'
+          Essential: true
+          PortMappings:
+            - ContainerPort: 80
+              Protocol: tcp
+      Family: MyNginx3
+      Cpu: 1 vCPU
+      Memory: 3 GB 
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+  ECSService:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: MyService
+      Cluster: !Ref ECSCluster
+      DesiredCount: 1
+      LaunchType: FARGATE
+      SchedulingStrategy: REPLICA
+      PlatformVersion: LATEST
+      NetworkConfiguration:
+          AwsvpcConfiguration:
+              AssignPublicIp: ENABLED
+              SecurityGroups:
+                - sg-02efcbaae0e03e556
+              Subnets:
+                - subnet-05ece799ded9b7e45
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 100
+        DeploymentCircuitBreaker:
+          Enable: true
+          Rollback: true
+      DeploymentController:
+        Type: ECS
+      ServiceConnectConfiguration:
+        Enabled: false
+      Tags: []
+      EnableECSManagedTags: true
+      TaskDefinition: !Ref ECSTaskDefinition
