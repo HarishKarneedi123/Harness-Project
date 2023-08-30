@@ -9,10 +9,10 @@ Parameters:
     Default: MyService
   VpcId:
     Type: String
-    Default: 'vpc-0eaad78df502ed062'
+    Default: ''
   SubnetIds:
     Type: CommaDelimitedList
-    Default: subnet-05ece799ded9b7e45
+    Default: ''
 Resources:
   ECSCluster:
     Type: AWS::ECS::Cluster
