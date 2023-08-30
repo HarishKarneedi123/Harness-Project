@@ -1,0 +1,61 @@
+pipeline:
+  name: DeployPipeline
+  identifier: DeployPipeline
+  projectIdentifier: AWS
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: ECSDeploy
+        identifier: ECSDeploy
+        description: ""
+        type: Deployment
+        spec:
+          deploymentType: ECS
+          service:
+            serviceRef: ClusterCreation
+          environment:
+            environmentRef: Dev
+            environmentInputs:
+              identifier: Dev
+              type: PreProduction
+              variables:
+                - name: SubnetId
+                  type: String
+                  value: <+input>
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: AWS_Devapsoutheast2
+          execution:
+            steps:
+              - step:
+                  type: CreateStack
+                  name: CreateStack
+                  identifier: CreateStack
+                  spec:
+                    provisionerIdentifier: ABC
+                    configuration:
+                      stackName: mynewstack
+                      connectorRef: AWS
+                      region: ap-southeast-2
+                      templateFile:
+                        type: Remote
+                        spec:
+                          store:
+                            type: Github
+                            spec:
+                              paths:
+                                - aws ecs
+                              connectorRef: GitHub
+                              gitFetchType: Branch
+                              branch: main
+                      roleArn: ""
+                  timeout: 10m
+            rollbackSteps: []
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
