@@ -3,10 +3,10 @@ Description: "AWS ECS Cluster"
 Parameters:
   ECSClusterName:
     Type: String
-    Default: DemoCluster2
+    Default: MyFargateCluster
   ECSServiceName:
     Type: String
-    Default: serviceee2
+    Default: MyService
   VpcId:
     Type: String
     Default: 'vpc-0eaad78df502ed062'
@@ -61,4 +61,5 @@ Resources:
       Tags: []
       EnableECSManagedTags: true
       TaskDefinition: !Ref ECSTaskDefnition
-      
+
+   
