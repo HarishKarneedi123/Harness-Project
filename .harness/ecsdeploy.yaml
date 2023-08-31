@@ -1,0 +1,61 @@
+pipeline:
+  name: ecsdeploy
+  identifier: ecsdeploy
+  projectIdentifier: AWS
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: deployecs
+        identifier: deployecs
+        description: ""
+        type: Deployment
+        spec:
+          deploymentType: ECS
+          service:
+            serviceRef: ClusterCreation
+          environment:
+            environmentRef: Dev
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: AWSDevapsoutheast2
+          execution:
+            steps:
+              - step:
+                  type: CreateStack
+                  name: CreateStack
+                  identifier: CreateStack
+                  spec:
+                    provisionerIdentifier: ABC
+                    configuration:
+                      stackName: mystack
+                      connectorRef: AWS
+                      region: ap-southeast-2
+                      templateFile:
+                        type: Remote
+                        spec:
+                          store:
+                            type: Github
+                            spec:
+                              paths:
+                                - aws ecs
+                              connectorRef: GitHub
+                              gitFetchType: Branch
+                              branch: main
+                      roleArn: ""
+                      parameterOverrides:
+                        - name: VpcId
+                          value: <+input>
+                          type: String
+                        - name: SubnetIds
+                          value: <+env.variables.SubnetId>
+                          type: String
+                  timeout: 10m
+            rollbackSteps: []
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
