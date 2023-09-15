@@ -22,7 +22,7 @@ pipeline:
                     configuration:
                       stackName: EKS1
                       connectorRef: AWS
-                      region: ap-southeast-2
+                      region: us-east-1
                       templateFile:
                         type: Remote
                         spec:
