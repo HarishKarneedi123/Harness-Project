@@ -16,6 +16,13 @@ pipeline:
             serviceRef: ClusterCreation
           environment:
             environmentRef: DEV
+            environmentInputs:
+              identifier: DEV
+              type: PreProduction
+              variables:
+                - name: SubnetId1
+                  type: String
+                  value: <+input>
             deployToAll: false
             infrastructureDefinitions:
               - identifier: AWSDEVuseast1
