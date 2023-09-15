@@ -20,7 +20,7 @@ pipeline:
                   spec:
                     provisionerIdentifier: ABC
                     configuration:
-                      stackName: EKS1
+                      stackName: newnew
                       connectorRef: AWS
                       region: us-east-1
                       templateFile:
@@ -35,5 +35,21 @@ pipeline:
                               gitFetchType: Branch
                               branch: main
                       roleArn: ""
+                      parameterOverrides:
+                        - name: EKSClusterName
+                          value: <+input>
+                          type: String
+                        - name: EKSNodeGroupName
+                          value: <+input>
+                          type: String
+                        - name: VpcId
+                          value: <+input>
+                          type: String
+                        - name: SubnetId1
+                          value: <+input>
+                          type: String
+                        - name: SubnetId2
+                          value: <+input>
+                          type: String
                   timeout: 10m
         tags: {}
