@@ -1,0 +1,54 @@
+pipeline:
+  name: eksdeploy
+  identifier: eksdeploy
+  projectIdentifier: AWS
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: KuberneteCls
+        identifier: KuberneteCls
+        description: ""
+        type: Deployment
+        spec:
+          deploymentType: Kubernetes
+          service:
+            serviceRef: kubernetescreation
+          environment:
+            environmentRef: KubeProd
+            deployToAll: false
+            infrastructureDefinitions:
+              - identifier: KubeProduseast1
+          execution:
+            steps:
+              - step:
+                  type: CreateStack
+                  name: CreateStack
+                  identifier: CreateStack
+                  spec:
+                    provisionerIdentifier: ABC
+                    configuration:
+                      stackName: mynew
+                      connectorRef: AWS
+                      region: us-east-1
+                      templateFile:
+                        type: Remote
+                        spec:
+                          store:
+                            type: Github
+                            spec:
+                              paths:
+                                - aws ekstask
+                              connectorRef: GitHub
+                              gitFetchType: Branch
+                              branch: main
+                      roleArn: ""
+                  timeout: 20m
+            rollbackSteps: []
+        tags: {}
+        failureStrategies:
+          - onFailure:
+              errors:
+                - AllErrors
+              action:
+                type: StageRollback
