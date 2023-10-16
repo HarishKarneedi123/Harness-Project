@@ -1,0 +1,29 @@
+pipeline:
+  name: rgfhmtgj
+  identifier: rgfhmtgj
+  projectIdentifier: AWS
+  orgIdentifier: default
+  tags: {}
+  stages:
+    - stage:
+        name: delete
+        identifier: delete
+        description: ""
+        type: Custom
+        spec:
+          execution:
+            steps:
+              - step:
+                  type: DeleteStack
+                  name: DeleteStack_1
+                  identifier: DeleteStack_1
+                  spec:
+                    configuration:
+                      type: Inline
+                      spec:
+                        connectorRef: AWS
+                        region: us-east-1
+                        stackName: Infra-ECS-Cluster-ecs-48573897
+                      connectorRef: AWS
+                  timeout: 10m
+        tags: {}
